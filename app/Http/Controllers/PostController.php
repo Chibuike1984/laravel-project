@@ -14,11 +14,7 @@ class PostController extends Controller
     public function deletepost(Post $post)
     {
 
-        if(auth()->user()->id === $post['user_id'])
-        {
-           $post->delete();
-        }
-        return redirect('/');
+        return ('welcome to laravel');
 
     }
 
@@ -26,11 +22,7 @@ class PostController extends Controller
     public function updateEdit(Post $post, Request $request)
     {
 
-        if(auth()->user()->id !== $post['user_id'])
-        {
-            return redirect('/');
-        }
-
+        
         $incomingpost = $request->validate([
             'title' => 'required',
             'body' =>'required'
@@ -55,14 +47,6 @@ class PostController extends Controller
 
     public function createpost(Request $request)
     {
-        $incomingpost = $request->validate([
-            'title' => 'required',
-            'body' => 'required'
-
-        ]);
-
-           //$incomingpost['title']  = strip_tags($incomingpost('title'));
-           //$incomingpost['body']  = strip_tags($incomingpost('body'));
            $incomingpost['user_id'] = auth()->id();
            Post::create($incomingpost);
            return redirect('/');      
